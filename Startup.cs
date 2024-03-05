@@ -32,6 +32,17 @@ namespace ToDoAPI
 
             services.AddScoped<IToDoService, ToDoService>();
             services.AddSingleton<IToDoRepo, ToDoRepo>();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin();  //set the allowed origin  
+                        policy.AllowAnyHeader();
+                        policy.AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +56,8 @@ namespace ToDoAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
